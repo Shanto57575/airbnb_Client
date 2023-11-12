@@ -151,13 +151,14 @@ const Login = () => {
 					</p>
 					<div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
 				</div>
-				<div
+				<button
+					disabled={loading ? true : false}
 					onClick={handleGoogleSign}
 					className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 hover:bg-black hover:text-white duration-300 border-rounded cursor-pointer shadow-sm shadow-gray-900"
 				>
 					<FcGoogle size={32} />
 					<p className="font-serif font-bold">Continue with Google</p>
-				</div>
+				</button>
 				<p className="px-6 text-sm text-center text-gray-400">
 					Dont have an account yet?{" "}
 					<Link
