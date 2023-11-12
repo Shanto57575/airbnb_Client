@@ -1,13 +1,15 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { ImSpinner9 } from "react-icons/im";
 import toast from "react-hot-toast";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "./../../Providers/AuthProviders";
 
 const Login = () => {
 	const { user, loading, setLoading, signIn, signInWithGoogle, resetPassword } =
 		useContext(AuthContext);
+	const [showPass, setShowPass] = useState(false);
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -59,13 +61,11 @@ const Login = () => {
 	};
 
 	return (
-		<div className="flex justify-center items-center min-h-screen">
-			<div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
+		<div className="flex justify-center items-center min-h-screen bg-gray-900">
+			<div className="flex flex-col max-w-md p-3 sm:p-10 bg-transparent text-white rounded-none md:border-x border-gray-100">
 				<div className="mb-8 text-center">
-					<h1 className="my-3 text-4xl font-bold">Log In</h1>
-					<p className="text-sm text-gray-400">
-						Sign in to access your account
-					</p>
+					<h1 className="my-3 text-4xl font-bold font-serif">Sign In</h1>
+					<p className="text-sm text-gray-400">Log in to access your account</p>
 				</div>
 				<form
 					onSubmit={handleSubmit}
@@ -85,8 +85,7 @@ const Login = () => {
 								id="email"
 								required
 								placeholder="Enter Your Email Here"
-								className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900"
-								data-temp-mail-org="0"
+								className="w-full py-2 border-b rounded-none bg-transparent focus:outline-none text-white"
 							/>
 						</div>
 						<div>
@@ -96,25 +95,43 @@ const Login = () => {
 								</label>
 							</div>
 							<input
-								type="password"
+								type={showPass ? "text" : "password"}
 								name="password"
 								id="password"
 								required
-								placeholder="*******"
-								className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900"
+								placeholder="Enter Your Password"
+								className="w-full py-2 border-b rounded-none bg-transparent focus:outline-none text-white"
 							/>
+							<div
+								className="relative cursor-pointer"
+								onClick={() => setShowPass(!showPass)}
+							>
+								{showPass ? (
+									<AiFillEye
+										className="text-white absolute right-3 bottom-2"
+										title="hide"
+										size={24}
+									/>
+								) : (
+									<AiFillEyeInvisible
+										className="text-white absolute right-3 bottom-2"
+										title="show"
+										size={24}
+									/>
+								)}
+							</div>
 						</div>
 					</div>
 
 					<div>
 						<button
 							type="submit"
-							className="bg-rose-500 w-full rounded-md py-3 text-white"
+							className="bg-rose-500 hover:bg-rose-600 duration-300 w-full rounded-md py-3 text-white"
 						>
 							{loading ? (
 								<ImSpinner9 className="m-auto animate-spin" size={24} />
 							) : (
-								"Continue"
+								<span className="font-serif font-bold">Continue</span>
 							)}
 						</button>
 					</div>
@@ -136,16 +153,16 @@ const Login = () => {
 				</div>
 				<div
 					onClick={handleGoogleSign}
-					className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer"
+					className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 hover:bg-black hover:text-white duration-300 border-rounded cursor-pointer shadow-sm shadow-gray-900"
 				>
 					<FcGoogle size={32} />
-					<p>Continue with Google</p>
+					<p className="font-serif font-bold">Continue with Google</p>
 				</div>
 				<p className="px-6 text-sm text-center text-gray-400">
 					Dont have an account yet?{" "}
 					<Link
 						to="/signup"
-						className="hover:underline hover:text-rose-500 text-gray-600"
+						className="hover:underline hover:text-rose-400 text-gray-100"
 					>
 						Sign up
 					</Link>
